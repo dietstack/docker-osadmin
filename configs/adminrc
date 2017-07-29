@@ -1,0 +1,16 @@
+unset OS_URL
+unset OS_TOKEN
+
+export OS_USERNAME=_RC_ADMIN_NAME_
+export OS_PASSWORD=_RC_ADMIN_PASSWORD_
+export OS_TENANT_NAME=_RC_ADMIN_TENANT_
+export OS_IDENTITY_API_VERSION=_RC_ADMIN_IDENTITY_API_VERSION_
+export OS_AUTH_URL=_RC_ADMIN_OS_AUTH_URL_
+export OS_USER_DOMAIN_NAME=default
+export OS_PROJECT_DOMAIN_NAME=default
+
+### The following lines can be omitted
+#export OS_TENANT_ID=tenantIDString
+#export OS_REGION_NAME=regionName
+#export OS_CACERT=/path/to/cacertFile
+
