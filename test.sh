@@ -1,3 +1,3 @@
 #!/bin/bash
 
-exit 0
+docker run --rm  osadmin:latest openstack
