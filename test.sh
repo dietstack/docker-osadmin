@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run --rm  osadmin:latest openstack
+docker run --rm  ${DOCKER_PROJ_NAME:-''}osadmin:latest openstack
