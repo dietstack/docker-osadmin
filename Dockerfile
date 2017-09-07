@@ -14,7 +14,7 @@ RUN echo 'APT::Install-Recommends "false";' >> /etc/apt/apt.conf && \
     python get-pip.py;
 
 RUN apt install -y $BUILD_PACKAGES  && \
-    pip install python-openstackclient python-heatclient openstacksdk py2-ipaddress && \
+    pip install python-openstackclient==3.11.0 python-heatclient openstacksdk py2-ipaddress && \
     apt remove -y --auto-remove $BUILD_PACKAGES &&  \
     apt-get clean && apt -y autoremove && \
     rm -rf /var/lib/apt/lists/*; rm -rf /root/.cache
