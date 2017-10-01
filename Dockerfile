@@ -8,7 +8,7 @@ ENV BUILD_PACKAGES="build-essential python-dev"
 
 RUN echo 'APT::Install-Recommends "false";' >> /etc/apt/apt.conf && \
     echo 'APT::Get::Install-Suggests "false";' >> /etc/apt/apt.conf && \
-    apt update; apt install -y ca-certificates bash-completion wget nano vim mariadb-client python; \
+    apt update; apt install -y ca-certificates bash-completion wget nano vim mariadb-client python socat; \
     update-ca-certificates; \
     wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py; \
     python get-pip.py;
@@ -35,4 +35,3 @@ WORKDIR /app
 ENTRYPOINT ["bash", "/app/entrypoint.sh"]
 
 CMD /bin/bash
-
