@@ -2,7 +2,7 @@
 
 ## CONTROL VARIABLES
 ## If you are using different floating subnet you need to set following variables
-## FLOATING_IP_SUBNET=192.168.12.0/24 EXTERNAL_IP=192.168.12.2 ./first_vm.sh
+## FLOATING_IP_SUBNET=192.168.12.0/24 JUST_EXTERNAL_IP=192.168.12.2 ./first_vm.sh
 
 export FLOATING_IP_SUBNET=${FLOATING_IP_SUBNET:-"192.168.99.0/24"} # mandatory
 export INTERNAL_SUBNET=${INTERNAL_SUBNET:-"192.168.35.0/24"} # mandatory
@@ -26,10 +26,12 @@ FLOATING_IP_END=$(echo $FLOATING_IP_POOL | cut -f2 -d-)
 # Gateway for internal network
 INTERNAL_GW=`python -c 'import os,ipaddress; print(ipaddress.ip_network(os.environ["INTERNAL_SUBNET"]).hosts().next());'`
 
-# EXTERNAL_IP is IP of controller in external network. In LocalStack default is same as $FLOATING_IP_GW
-# EXTERNAL_IP has to be in format 192.168.12.2
-EXTERNAL_IP=${EXTERNAL_IP:-$FLOATING_IP_GW}
-export no_proxy=127.0.0.1,localhost,$FLOATING_IP_GW,$EXTERNAL_IP
+# JUST_EXTERNAL_IP is IP of controller in external network. In LocalStack default is same as $FLOATING_IP_GW
+# JUST_EXTERNAL_IP has to be in format 192.168.12.2
+JUST_EXTERNAL_IP=${JUST_EXTERNAL_IP:-$FLOATING_IP_GW}
+
+# If proxy is in use, ensure that dietstack IPs are not router to proxy servers
+export no_proxy=127.0.0.1,localhost,$FLOATING_IP_GW,$JUST_EXTERNAL_IP
 
 ## ADMIN PART ##
 
