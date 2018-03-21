@@ -4,7 +4,13 @@
 ## If you are using different floating subnet you need to set following variables
 ## FLOATING_IP_SUBNET=192.168.12.0/24 JUST_EXTERNAL_IP=192.168.12.2 ./first_vm.sh
 
-export FLOATING_IP_SUBNET=${FLOATING_IP_SUBNET:-"192.168.99.0/24"} # mandatory
+EXTERNAL_NET=192.168.99.0/24
+
+if [ -f /app/settings.sh ]; then
+   . /app/settings.sh
+fi
+
+export FLOATING_IP_SUBNET=${FLOATING_IP_SUBNET:-$EXTERNAL_NET} # mandatory
 export INTERNAL_SUBNET=${INTERNAL_SUBNET:-"192.168.35.0/24"} # mandatory
 
 FLOATING_IP_SIZE=$(python -c 'import os,ipaddress; print(ipaddress.ip_network(os.environ["FLOATING_IP_SUBNET"]).num_addresses);')
@@ -34,8 +40,12 @@ JUST_EXTERNAL_IP=${JUST_EXTERNAL_IP:-$FLOATING_IP_GW}
 export no_proxy=127.0.0.1,localhost,$FLOATING_IP_GW,$JUST_EXTERNAL_IP
 
 ## ADMIN PART ##
-
 . adminrc
+
+# add cirros image
+openstack image list | grep -qw cirros || { \
+    wget https://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img -O /app/cirros.img; \
+    openstack image create --container-format bare --disk-format qcow2 --file /app/cirros.img --public cirros; }
 
 # Add basic flavor
 openstack flavor create --id 0 --vcpus 1 --ram 64 --disk 1 m1.nano
