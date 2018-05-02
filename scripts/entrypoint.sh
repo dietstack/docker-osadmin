@@ -2,10 +2,6 @@
 set -e
 
 # define variable defaults
-ADMIN_TOKEN=${ADMIN_TOKEN:-veryS3cr3t}
-OS_IDENTITY_API_VERSION=${OS_IDENTITY_API_VERSION:-3}
-OS_URL=${OS_URL:-"http:\/\/127.0.0.1:35357\/v3"}
-
 RC_USER_NAME=${RC_USER_NAME:-demo}
 RC_USER_PASSWORD=${RC_USER_PASSWORD:-veryS3cr3t}
 RC_USER_TENANT=${RC_USER_TENANT:-demo}
@@ -26,10 +22,6 @@ CONF_FILES=(`find $CONF_DIR/*rc -maxdepth 1 -type f`)
 
 for CONF in ${CONF_FILES[*]}; do
     echo "$LOG_MESSAGE generating $CONF file ..."
-
-    sed -i "s/_ADMIN_TOKEN_/$ADMIN_TOKEN/" $CONF
-    sed -i "s/_OS_IDENTITY_API_VERSION_/$OS_IDENTITY_API_VERSION/" $CONF
-    sed -i "s#_OS_URL_#$OS_URL#" $CONF
 
     sed -i "s/_RC_USER_NAME_/$RC_USER_NAME/" $CONF
     sed -i "s/_RC_USER_PASSWORD_/$RC_USER_PASSWORD/" $CONF
